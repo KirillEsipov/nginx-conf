@@ -1,0 +1,15 @@
+location ~ \.php$ {
+root /var/www;
+try_files $uri =404;
+fastcgi_pass   unix:/var/run/php5-fpm.sock;
+fastcgi_index  index.php;
+fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+
+fastcgi_cache  one;
+fastcgi_cache_min_uses 3;
+fastcgi_cache_valid 200 301 302 304 5m;
+fastcgi_cache_key "$request_method|$host|$request_uri";
+
+include fastcgi_params;
+fastcgi_ignore_client_abort     off;
+}
